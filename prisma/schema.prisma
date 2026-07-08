@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String        @id @default(cuid())
+  name          String?
+  email         String        @unique
+  password      String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  accounts      Account[]
+  categories    Category[]
+  transactions  Transaction[]
+}
+
+model Account {
+  id           String        @id @default(cuid())
+  name         String
+  type         AccountType
+  balance      Decimal       @default(0) @db.Decimal(12, 2)
+  color        String        @default("#6366f1")
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[] @relation("AccountTransactions")
+  fromTransfers Transaction[] @relation("FromAccount")
+  toTransfers  Transaction[] @relation("ToAccount")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Category {
+  id           String        @id @default(cuid())
+  name         String
+  type         TransactionType
+  color        String        @default("#6366f1")
+  icon         String        @default("tag")
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parentId     String?
+  parent       Category?     @relation("Subcategories", fields: [parentId], references: [id])
+  children     Category[]    @relation("Subcategories")
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Transaction {
+  id            String          @id @default(cuid())
+  type          TransactionType
+  amount        Decimal         @db.Decimal(12, 2)
+  description   String
+  notes         String?
+  date          DateTime
+  userId        String
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountId     String
+  account       Account         @relation("AccountTransactions", fields: [accountId], references: [id])
+  categoryId    String?
+  category      Category?       @relation(fields: [categoryId], references: [id])
+  fromAccountId String?
+  fromAccount   Account?        @relation("FromAccount", fields: [fromAccountId], references: [id])
+  toAccountId   String?
+  toAccount     Account?        @relation("ToAccount", fields: [toAccountId], references: [id])
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+  CASH
+  WALLET
+  INVESTMENT
+  OTHER
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+  TRANSFER
+}
