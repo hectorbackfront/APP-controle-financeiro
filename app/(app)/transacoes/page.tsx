@@ -126,7 +126,7 @@ export default function TransacoesPage() {
               <span className="sm:hidden">Nova</span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-md mx-4">
+          <DialogContent className="max-w-md">
             <DialogHeader>
               <DialogTitle>Nova Transação</DialogTitle>
             </DialogHeader>
@@ -211,7 +211,7 @@ export default function TransacoesPage() {
       </div>
 
       {/* Filtros */}
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex items-center gap-2 flex-wrap overflow-x-auto pb-1">
         <Filter className="h-4 w-4 text-gray-400 shrink-0" />
         <Select value={filterMonth} onValueChange={setFilterMonth}>
           <SelectTrigger className="w-32 sm:w-36"><SelectValue /></SelectTrigger>

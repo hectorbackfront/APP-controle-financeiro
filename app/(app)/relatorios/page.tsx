@@ -209,17 +209,17 @@ export default function RelatoriosPage() {
                 {Object.entries(byCategory)
                   .sort(([, a], [, b]) => b - a)
                   .map(([cat, val]) => (
-                    <div key={cat} className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 flex-1 mr-4">
-                        <span className="text-sm text-gray-700 w-32 shrink-0">{cat}</span>
-                        <div className="flex-1 bg-gray-100 rounded-full h-2">
-                          <div
-                            className="bg-red-400 h-2 rounded-full"
-                            style={{ width: `${Math.min(100, (val / expense) * 100)}%` }}
-                          />
-                        </div>
+                    <div key={cat} className="space-y-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-sm text-gray-700 truncate min-w-0">{cat}</span>
+                        <span className="text-sm font-semibold text-gray-900 shrink-0">{formatCurrency(val)}</span>
                       </div>
-                      <span className="text-sm font-semibold text-gray-900 w-28 text-right">{formatCurrency(val)}</span>
+                      <div className="w-full bg-gray-100 rounded-full h-2">
+                        <div
+                          className="bg-red-400 h-2 rounded-full"
+                          style={{ width: `${Math.min(100, (val / expense) * 100)}%` }}
+                        />
+                      </div>
                     </div>
                   ))}
               </div>

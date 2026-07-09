@@ -90,7 +90,7 @@ export default function CategoriasPage() {
                 <Plus className="h-4 w-4 mr-2" />Nova Categoria
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-sm mx-4">
+            <DialogContent className="max-w-sm">
               <DialogHeader>
                 <DialogTitle>Nova Categoria</DialogTitle>
               </DialogHeader>

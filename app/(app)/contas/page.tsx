@@ -80,7 +80,7 @@ export default function ContasPage() {
               <span className="sm:hidden">Nova</span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-sm mx-4">
+          <DialogContent className="max-w-sm">
             <DialogHeader>
               <DialogTitle>Nova Conta</DialogTitle>
             </DialogHeader>

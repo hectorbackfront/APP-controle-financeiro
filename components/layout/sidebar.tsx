@@ -100,7 +100,7 @@ export function Sidebar() {
                 )}
               >
                 <Icon className="h-5 w-5" />
-                <span className="text-[10px] leading-none font-medium">
+                <span className="text-[10px] leading-none font-medium truncate max-w-full">
                   {item.label}
                 </span>
               </Link>
