@@ -2,8 +2,12 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 function createPrismaClient() {
+  // pg v8.x treats sslmode=require as verify-full, overriding rejectUnauthorized.
+  // Strip sslmode from the URL so the ssl option below controls cert verification.
+  const url = new URL(process.env.DATABASE_URL!);
+  url.searchParams.delete("sslmode");
   const adapter = new PrismaPg({
-    connectionString: process.env.DATABASE_URL!,
+    connectionString: url.toString(),
     ssl: { rejectUnauthorized: false },
   });
   return new PrismaClient({
